@@ -23,9 +23,8 @@ void setup() {
 }
 
 void loop() {
- 
- 
  interval = outputButton();
+ 
 
  Push_button_state = digitalRead(PushButton);
 
@@ -62,23 +61,23 @@ void loop() {
 
   while (buttonPresses == 1)
   {
-    
+    //Checks to see if the current time is less than the delay time that has been passes from the consoleOutputTime method 
    unsigned long currentMillis = millis();
   if(currentMillis - previousMillis > interval) {
-  Serial.println("Output time every 5 seconds");
       Serial.print("The temprature is: ");
       Serial.println(tempratureValue);
       Serial.print("The humiduty value is: ");
       Serial.println(humidtyValue);
       previousMillis = currentMillis;
+      //Serial.print("Actual output time is = ");
+      //Serial.println(interval);
 }
-  outputButtonRead();
+  
   tempReturn();
   RGBTempClass();
   humReturn();
   RGBHumClass();
-  
-  
+  outputButtonRead();
   break;
 
 
