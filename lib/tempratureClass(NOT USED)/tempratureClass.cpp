@@ -1,5 +1,5 @@
 // #include <Arduino.h>
-//#include <dhtValuesClass.cpp>
+// #include <dhtValuesClass.cpp>
 
 // //Global 
 // int switchCaseTemp;
@@ -22,7 +22,7 @@
 // int tempReturn(){
 	
 //    //float t = tempValueReturnDHT(); //Reads temprature stores value in "t"
-//     
+    
 //     if (isnan(t)) {
 // 		Serial.println("Failed to read Temprature from DHT sensor!");
 // 		Serial.println("Ensure DHT is connected correctly");
