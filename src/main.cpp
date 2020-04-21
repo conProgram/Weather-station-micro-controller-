@@ -38,7 +38,7 @@ void setup() {
   pinMode(pirPin, INPUT);
   Serial.println("Waiting on PIR sensor ...");
   Serial.println("Ouputs set to 5 Seconds by default press outputbutton to change the output time");
-  
+  delay(2000);
 }
 
 void loop() {
