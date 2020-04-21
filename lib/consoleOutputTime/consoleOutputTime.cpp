@@ -5,7 +5,7 @@ const int StringButton = 19;
 //Output time delay is set useing this varible 
 int outputTime;
 //Counts output delay button presses
-int outputButtonPresses = 0;
+int outputButtonPresses = 1;
 //Used for the state of the output time button
 int String_button_state = 0;
 
