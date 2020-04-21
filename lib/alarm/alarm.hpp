@@ -1,0 +1,2 @@
+void alarmSetup();
+int alarm();
