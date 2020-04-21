@@ -1,12 +1,20 @@
 #include <Arduino.h>
 #include <dhtValuesClass.cpp>
+#include <alarm.cpp>
 
 void dhtClassSetupCalling(){
    dhtSetup();
 }
 
+void alarmClassSetupCalling(){
+	alarmSetup();
+}
+void alarmCalled(){
+	alarm();
+}
+
 //Global 
-int switchCaseTemp;
+//int switchCaseTemp;
 
 //Temp RGB
 const int redTemp = 15;
@@ -90,7 +98,7 @@ void RGBTempClass(){
 //Humidity Code 
 
 //Global 
-int switchCaseHum;
+//int switchCaseHum;
 
 //Humidity RGB
 const int redHum = 4;

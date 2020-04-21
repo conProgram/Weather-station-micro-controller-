@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <rgbColorSet.cpp>
 #include <consoleOutputTime.cpp>
-#include <alarm.cpp>
+
 
 //Pir Sensor Button
 //const int PushButton = 27;
@@ -31,7 +31,8 @@ void setup() {
   humiditySetUpClass();
   tempratureSetupClass();
   outputButtonSetup();
-  alarmSetup();
+  alarmClassSetupCalling();
+  
 
   pinMode(pirPin, INPUT);
   Serial.println("Waiting on PIR sensor ...");
@@ -39,7 +40,7 @@ void setup() {
 }
 
 void loop() {
- alarm();
+ 
  interval = outputButton();
  
  //Push_button_state = digitalRead(PushButton);
@@ -96,10 +97,10 @@ void loop() {
       //Serial.print("Actual output time is = ");
       //Serial.println(interval);
 }
-  
   tempReturn();
   RGBTempClass();
   humReturn();
+  alarmCalled();
   RGBHumClass();
   outputButtonRead();
   break;

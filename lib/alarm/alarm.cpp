@@ -15,8 +15,8 @@ int fiveSeconds;
 int twoMins;
 int currentSnoozeTime;
 
-int switchCaseTemp2 = 1;
-int switchCaseHum2 = 1;
+int switchCaseTemp;
+int switchCaseHum;
 
 void alarmSetup(){
 pinMode(pinBuz, INPUT);
@@ -28,53 +28,39 @@ Serial.println("Buzzer initialised");
 void alarm(){
     //Alarm button read in
 	alarm_button_state = digitalRead(snoozeButton);
-
-    while(currentSnoozeTime < twoMins){
-		digitalWrite(pinBuz, 0);
-        twoMins = millis() + 120000;
-        currentSnoozeTime = millis();		
 	
-	}
-	//If alarm/snooze button is pressed proving the RGB's are not green
+	//If alarm/snooze button is pressed do this
 	if (alarm_button_state == LOW){
 		
-		if(switchCaseTemp2 > 1 || switchCaseHum2 > 1){
-		twoMins = millis() + 120000;
-		currentSnoozeTime = millis();
+		//Checks alarm is actually on so user can't snooze a alarm that isnt on 
+		while(switchCaseTemp > 1 || switchCaseHum > 1){
+		twoMins = millis() + 120000; //Calcuates 2 mins from now
+		currentSnoozeTime = millis(); //Gets currentTime
+		digitalWrite(pinBuz, 0);
+		Serial.println("Alarm Snoozed");	
+
+		break;
 		
 		}}
-	
-	//If Amber LED is on either temprature or humidity this is run
-	else if(switchCaseTemp2 == 2 || switchCaseHum2 == 2){
-		thirtySeconds = millis() + 30000; //Calcuates 30 seconds time from when the amber LED is on
-		currentBuzzerTime = millis(); //Gets current time
-		
-		//Alarm goes for 30 seconds
-		if(currentBuzzerTime < thirtySeconds){
-		digitalWrite(pinBuz, 1);	
 
-	}
-		//After 30 seconds alarm turns off and timer is resrtarted
-	else if(currentBuzzerTime >= thirtySeconds){
-		digitalWrite(pinBuz, 0);
-		thirtySeconds = millis() + 30000;
-		currentBuzzerTime = millis(); //Gets current time
-	}
-	
-	//If Red LED is on either temprature or humidity this is run
-	else if(switchCaseTemp2 == 3 || switchCaseHum2 == 3){
-		fiveSeconds = millis() + 5000;
-		currentBuzzerTime = millis();
-		
-		if(currentBuzzerTime < fiveSeconds){
+	//Once 2 min snooze is up alarm set back on 
+    while(currentSnoozeTime > twoMins){
 		digitalWrite(pinBuz, 1);
+		Serial.println("Alarm back on");	
+		break;
+	
+	}
+	//If Amber LED is on either temprature or humidity this is run
+	while(switchCaseTemp == 2 || switchCaseHum == 2){
+		digitalWrite(pinBuz, 1);
+		break;
 		
-	}else if(currentBuzzerTime >= fiveSeconds){
-		digitalWrite(pinBuz, 0);
-		fiveSeconds = millis() + 5000;
-		currentBuzzerTime = millis();
+			
 	}
-	}}
-    
+	//If Red LED is on either temprature or humidity this is run
+	while(switchCaseTemp == 3 || switchCaseHum == 3){
+		digitalWrite(pinBuz, 1);
+		break;
 
-	}
+	
+	}}
