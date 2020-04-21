@@ -1,6 +1,6 @@
 #include <Arduino.h>
 //Buzzer
-const int pinBuz = 26;
+const int pinBuz = 13;
 
 //Button to snooze the alarm 
 const int snoozeButton = 18;
@@ -15,55 +15,57 @@ int fiveSeconds;
 int twoMins;
 int currentSnoozeTime;
 
-int switchCaseTemp;
-int switchCaseHum;
+//This returns which alarm should go off
+int TempColorTypeReturn;
+int HumColorTypeReturn;
+
+
 
 void alarmSetup(){
-pinMode(pinBuz, INPUT);
+pinMode(pinBuz, OUTPUT);
 Serial.println("Buzzer initialised");
 
 }
 
-//Method for the buzzer code
-void alarm(){
-    //Alarm button read in
+void whichAlarm(){
+	
+switch(TempColorTypeReturn){
+	case 1:
+	digitalWrite(pinBuz, 1);
+	break;
+	case 2:
+	digitalWrite(pinBuz, 1);
+	break;
+	case 3:
+	digitalWrite(pinBuz, 0);
+	break;
+}
+switch(HumColorTypeReturn){
+
+	case 1:
+	digitalWrite(pinBuz, 1);
+	break;
+	case 2:
+	digitalWrite(pinBuz, 1);
+	break;
+	case 3:
+	digitalWrite(pinBuz, 0);
+	break;
+}
+
+}
+
+void alarmButton(){
+	    //Alarm button read in
 	alarm_button_state = digitalRead(snoozeButton);
 	
 	//If alarm/snooze button is pressed do this
-	if(alarm_button_state == LOW){
-		
+	while(alarm_button_state == LOW){
 		Serial.println("Alarm Snoozed");
-		delay(500);//debounce	
-		
-		//Checks alarm is actually on so user can't snooze a alarm that isnt on 
-		while(switchCaseTemp > 1 || switchCaseHum > 1){
-		twoMins = millis() + 120000; //Calcuates 2 mins from now
-		currentSnoozeTime = millis(); //Gets currentTime
 		digitalWrite(pinBuz, 0);
-		break;
-		
-		}
-		
-		}
-
-	//Once 2 min snooze is up alarm set back on 
-    while(currentSnoozeTime > twoMins){
-		digitalWrite(pinBuz, 1);
-		Serial.println("Alarm back on");	
-		break;
-	
-	}
-	//If Amber LED is on either temprature or humidity this is run
-	while(switchCaseTemp == 2 || switchCaseHum == 2){
-		digitalWrite(pinBuz, 1);
-		break;
-		
-			
-	}
-	//If Red LED is on either temprature or humidity this is run
-	while(switchCaseTemp == 3 || switchCaseHum == 3){
-		digitalWrite(pinBuz, 1);
+		TempColorTypeReturn = 3;
+		HumColorTypeReturn = 3;
+		delay(1000);//debounce	
 		break;
 
-	
-	}}
+}}

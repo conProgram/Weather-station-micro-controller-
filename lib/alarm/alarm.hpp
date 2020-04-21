@@ -1,2 +1,3 @@
 void alarmSetup();
-void alarm();
+void whichAlarm();
+void alarmButton();

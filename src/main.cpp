@@ -32,6 +32,7 @@ void setup() {
   tempratureSetupClass();
   outputButtonSetup();
   alarmClassSetupCalling();
+  alarmCalled();
   
 
   pinMode(pirPin, INPUT);

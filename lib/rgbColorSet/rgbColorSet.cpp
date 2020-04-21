@@ -10,8 +10,12 @@ void alarmClassSetupCalling(){
 	alarmSetup();
 }
 void alarmCalled(){
-	alarm();
+	whichAlarm();
+	alarmButton();
 }
+
+int switchCaseTemp;
+int switchCaseHum;
 
 //Global 
 //int switchCaseTemp;
@@ -61,24 +65,27 @@ int tempReturn(){
   
 }
 
-void RGBTempClass(){
+int RGBTempClass(){
     switch (switchCaseTemp) {
 	case 1: //If switchCaseTemp is set to 1 useing the if statment above 
 		digitalWrite(greenTemp, HIGH);
 		digitalWrite(blueTemp, LOW);
 		digitalWrite(redTemp, LOW);
+		TempColorTypeReturn = 3;
 		break; //Green led lights up
 
 	case 2:
 		digitalWrite(greenTemp, HIGH);
 		digitalWrite(blueTemp, LOW);
 		digitalWrite(redTemp, HIGH);
+		TempColorTypeReturn = 2;
 		break; //Amber LED lights up
 
 	case 3:
 		digitalWrite(greenTemp, HIGH);
 		digitalWrite(blueTemp, LOW);
 		digitalWrite(redTemp, LOW);
+		TempColorTypeReturn = 1;
 		break; // Red LED lights up
 
 		//The default is set if my previous code crashes it will become obvious as the RGB will go CYAN
@@ -92,7 +99,9 @@ void RGBTempClass(){
 		Serial.print(switchCaseTemp);
 		break;
 
-	}}
+	}
+	return TempColorTypeReturn;
+	}
 
 // ----------------------------------------------------------------------------------------- //
 //Humidity Code 
@@ -144,24 +153,27 @@ float h = humValueReturnDHT();
   
 }
 
-void RGBHumClass(){
+int RGBHumClass(){
     switch (switchCaseHum) {
 	case 1:
 		digitalWrite(greenHum, HIGH);
 		digitalWrite(blueHum, LOW);
 		digitalWrite(redHum, LOW);
+		HumColorTypeReturn = 3;
 		break;
 
 	case 2:
 		digitalWrite(greenHum, HIGH);
 		digitalWrite(blueHum, LOW);
 		digitalWrite(redHum, HIGH);
+		HumColorTypeReturn =  2;
 		break;
 
 	case 3:
 		digitalWrite(greenHum, LOW);
 		digitalWrite(blueHum, LOW);
 		digitalWrite(redHum, HIGH);
+		HumColorTypeReturn = 3;
 		break;
 
 	default:
@@ -173,5 +185,6 @@ void RGBHumClass(){
 		break;
 
 	}
+	return HumColorTypeReturn;
 }
 
