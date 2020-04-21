@@ -1,11 +1,24 @@
 #include <Arduino.h>
 #include <rgbColorSet.cpp>
 #include <consoleOutputTime.cpp>
+#include <alarm.cpp>
+
 //Pir Sensor Button
-const int PushButton = 27;
+//const int PushButton = 27;
+
+//Pin for PIR sensor
+const int pirPin = 27;
+
+//Pir Status
+int pirStatus = 0;
+
+int currentTime;
+int tenMinsTime;
+
 //Used for the state of the PIR sensor button
-int Push_button_state = 0;
-//Counts PIR sensors button presses
+//int Push_button_state = 0;
+
+//Counts PIR sensor activation
 int buttonPresses = 0;
 
 long previousMillis = 0;
@@ -18,23 +31,34 @@ void setup() {
   humiditySetUpClass();
   tempratureSetupClass();
   outputButtonSetup();
+  alarmSetup();
+
+  pinMode(pirPin, INPUT);
   Serial.println("Waiting on PIR sensor ...");
   
 }
 
 void loop() {
+ alarm();
  interval = outputButton();
  
-
- Push_button_state = digitalRead(PushButton);
-
+ //Push_button_state = digitalRead(PushButton);
+  pirStatus = digitalRead(pirPin);
  	
-	 if (Push_button_state == LOW) {
- 		buttonPresses ++;
- 		delay(1000);
- 	//Serial.println("PIR SENSOR IS ACTIVATED");
+   //Due to my PIR Sensor not working I have had to set the state to on for testing purposes 
+   pirStatus = HIGH;
+   //High is activated
+	 if (pirStatus == HIGH) {
+     //Easier to understand for me than ++ as dont want the PIR sensor spamming the counter 
+ 		buttonPresses = 1;
+    currentTime = millis();
+    tenMinsTime = millis() + 600000;
+    delay(1000);// Debounce
+ 	  Serial.println("PIR SENSOR IS ACTIVATED");
+    Serial.println("10 min timer activated");
 	}
 
+  while(currentTime <= tenMinsTime){
   switch (buttonPresses) {
 	case 0:
 	digitalWrite(greenHum, LOW);
@@ -83,4 +107,12 @@ void loop() {
 
   }
  
+}
+while(currentTime > tenMinsTime){
+  Serial.println("10 Mins has passed");
+  currentTime = millis();
+  tenMinsTime = millis() + 600000;
+  buttonPresses = 2;
+  break;
+}
 }

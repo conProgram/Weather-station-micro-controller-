@@ -9,9 +9,9 @@ void dhtClassSetupCalling(){
 int switchCaseTemp;
 
 //Temp RGB
-const int redTemp = 16;
-const int greenTemp = 4;
-const int blueTemp = 5;
+const int redTemp = 15;
+const int greenTemp = 2;
+const int blueTemp = 0;
 
  void tempratureSetupClass(){
 	//Temprature RGB's
@@ -93,9 +93,9 @@ void RGBTempClass(){
 int switchCaseHum;
 
 //Humidity RGB
-const int redHum = 14;
-const int greenHum = 13;
-const int blueHum = 18;
+const int redHum = 4;
+const int greenHum = 16;
+const int blueHum = 17;
 
  void humiditySetUpClass(){
   
