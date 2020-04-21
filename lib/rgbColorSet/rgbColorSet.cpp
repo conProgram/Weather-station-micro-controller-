@@ -72,7 +72,7 @@ void RGBTempClass(){
 	case 2:
 		digitalWrite(greenTemp, HIGH);
 		digitalWrite(blueTemp, LOW);
-		digitalWrite(redTemp, LOW);
+		digitalWrite(redTemp, HIGH);
 		break; //Amber LED lights up
 
 	case 3:

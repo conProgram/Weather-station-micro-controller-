@@ -30,18 +30,21 @@ void alarm(){
 	alarm_button_state = digitalRead(snoozeButton);
 	
 	//If alarm/snooze button is pressed do this
-	if (alarm_button_state == LOW){
+	if(alarm_button_state == LOW){
+		
+		Serial.println("Alarm Snoozed");
+		delay(500);//debounce	
 		
 		//Checks alarm is actually on so user can't snooze a alarm that isnt on 
 		while(switchCaseTemp > 1 || switchCaseHum > 1){
 		twoMins = millis() + 120000; //Calcuates 2 mins from now
 		currentSnoozeTime = millis(); //Gets currentTime
 		digitalWrite(pinBuz, 0);
-		Serial.println("Alarm Snoozed");	
-
 		break;
 		
-		}}
+		}
+		
+		}
 
 	//Once 2 min snooze is up alarm set back on 
     while(currentSnoozeTime > twoMins){

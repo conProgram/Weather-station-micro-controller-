@@ -22,7 +22,6 @@ void outputButtonSetup(){
 
 int outputButton() {
     
-
 	//Depending on how many button presses a new output time is set
 	switch (outputButtonPresses) {
 	case 1:

@@ -36,12 +36,13 @@ void setup() {
 
   pinMode(pirPin, INPUT);
   Serial.println("Waiting on PIR sensor ...");
+  Serial.println("Ouputs set to 5 Seconds by default press outputbutton to change the output time");
   
 }
 
 void loop() {
  
- interval = outputButton();
+ //interval = outputButton();
  
  //Push_button_state = digitalRead(PushButton);
   pirStatus = digitalRead(pirPin);
@@ -86,6 +87,7 @@ void loop() {
 
   while (buttonPresses == 1)
   {
+    interval = outputButton();
     //Checks to see if the current time is less than the delay time that has been passes from the consoleOutputTime method 
    unsigned long currentMillis = millis();
   if(currentMillis - previousMillis > interval) {
@@ -94,8 +96,8 @@ void loop() {
       Serial.print("The humiduty value is: ");
       Serial.println(humidtyValue);
       previousMillis = currentMillis;
-      //Serial.print("Actual output time is = ");
-      //Serial.println(interval);
+      Serial.print("Actual output time is = ");
+      Serial.println(interval);
 }
   tempReturn();
   RGBTempClass();
