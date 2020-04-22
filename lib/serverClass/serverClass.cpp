@@ -119,6 +119,7 @@ void Serversetup(){
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.println("Connecting to WiFi..");
+    break;
   }
   
   Serial.print("Enter this code into your broswer: ");
