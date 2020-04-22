@@ -3,7 +3,7 @@
 const int pinBuz = 13;
 
 //Button to snooze the alarm 
-const int snoozeButton = 18;
+const int snoozeButton = 14;
 
 //Used for the state of the output time button
 int alarm_button_state = 0;

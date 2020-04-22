@@ -1,9 +1,6 @@
-#include "DHT.h"
-
 #include "SD.h"
 #include "FS.h"
 #include <SPI.h>
-
 #include <WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
@@ -28,6 +25,7 @@ String formatDate;
 String dayStamp;
 String timeStamp; 
 
+//SD card pin is 5 
 #define SDPin 5
 File myFile;
 

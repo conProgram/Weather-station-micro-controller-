@@ -1,10 +1,8 @@
 #include <Arduino.h>
 #include <rgbColorSet.cpp>
 #include <consoleOutputTime.cpp>
+#include <sdCard.cpp>
 
-
-//Pir Sensor Button
-//const int PushButton = 27;
 
 //Pin for PIR sensor
 const int pirPin = 27;
@@ -33,11 +31,13 @@ void setup() {
   outputButtonSetup();
   alarmClassSetupCalling();
   alarmCalled();
+  SDcardsetup();
   
 
   pinMode(pirPin, INPUT);
   Serial.println("Waiting on PIR sensor ...");
   Serial.println("Ouputs set to 5 Seconds by default press outputbutton to change the output time");
+  //SDcardsetup();
   delay(2000);
 }
 

@@ -1,7 +1,7 @@
 #include <Wire.h>
 //DHT Sensor Config
 #include <DHT.h> //Sensor library
-#define DHTPIN 5 //Pin of sensor
+#define DHTPIN 15 //Pin of sensor
 #define DHTTYPE DHT11   // DHT 11
 
 DHT dht(DHTPIN, DHTTYPE); //Sets sensor pin and which type of sensor we are using in the DHL

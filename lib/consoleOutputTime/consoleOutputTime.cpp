@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 //Output to console time Button
-const int StringButton = 19;
+const int StringButton = 0;
 //Output time delay is set useing this varible 
 int outputTime;
 //Counts output delay button presses
