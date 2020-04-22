@@ -106,6 +106,7 @@ void loop() {
   alarmCalled();
   RGBHumClass();
   outputButtonRead();
+  methodsPassedToMainLoop();
   break;
 
 

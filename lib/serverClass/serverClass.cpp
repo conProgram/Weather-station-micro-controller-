@@ -1,16 +1,26 @@
 #include "WiFi.h"
 #include "ESPAsyncWebServer.h"
 #include <Adafruit_Sensor.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 
-
-const char* ssid = "REPLACE_WITH_YOUR_SSID";
-const char* password = "REPLACE_WITH_YOUR_PASSWORD";
+const char*ssid = "CiPhone"; //My hotspot name
+const char*password = "conyers98"; //Hotspot password
 
 String dataMessage;
 
 
 AsyncWebServer server(80);
+
+
+const char* ssidCredential(){
+  return ssid;
+}
+
+const char* passwordCredential(){
+  return password;
+}
 
 String readDHTTemperature() {
   float t = 10;
@@ -105,13 +115,15 @@ void Serversetup(){
   
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
+  
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.println("Connecting to WiFi..");
   }
+  
+  Serial.print("Enter this code into your broswer: ");
   Serial.println(WiFi.localIP());
 
-  
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/html", index_html, processor);
   });
@@ -125,5 +137,5 @@ void Serversetup(){
   // Start server
   server.begin();
 }
-}
+
 

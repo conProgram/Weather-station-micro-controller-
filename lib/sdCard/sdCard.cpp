@@ -1,26 +1,26 @@
 #include "SD.h"
 #include "FS.h"
 #include <SPI.h>
-#include <WiFi.h>
-#include <NTPClient.h>
-#include <WiFiUdp.h>
+#include <serverClass.cpp>
 
 
-uint64_t uS_TO_S_FACTOR = 1000000;
-uint64_t TIME_TO_SLEEP = 600;
+ uint64_t uS_TO_S_FACTOR = 1000000;
+ uint64_t TIME_TO_SLEEP = 600;
 
-const char*ssid = "CiPhone"; //My hotspot name
-const char*password = "conyers98"; //Hotspot password
+// const char*ssid = "CiPhone"; //My hotspot name
+// const char*password = "conyers98"; //Hotspot password
 
 //Increments how many times the data is appended to the file 
 RTC_DATA_ATTR int readingID = 0;
-String dataMessage;
+
+
+//String dataMessage;
 
 float temperature; //Values stored from DHT
 float humidity;
 
-WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
+ WiFiUDP ntpUDP;
+ NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
 
 String formatDate; //Gives out the date (Not working) //Dosent recogise built in feature 
 String dayStamp; //What day the DHT11 Values have been taken
@@ -64,20 +64,20 @@ void appendFile(fs::FS &fs, const char*path, const char*message) {
 
 }
 
-//Uses built in methods here
-void getTimeStamp() {
-  while(!timeClient.update()) {
-    timeClient.forceUpdate();
-  }
-  formatDate = timeClient.getFormattedTime(); //This is for the date need to chaneg to format date as date is currently set to time
-  Serial.println(formatDate);
+// //Uses built in methods here
+// void getTimeStamp() {
+//   while(!timeClient.update()) {
+//     timeClient.forceUpdate();
+//   }
+//   formatDate = timeClient.getFormattedTime(); //This is for the date need to chaneg to format date as date is currently set to time
+//   Serial.println(formatDate);
 
-  int splitT = formatDate.indexOf("T");
-  dayStamp = formatDate.substring(0, splitT);
-  Serial.println(dayStamp);
-  timeStamp = formatDate.substring(splitT+1,formatDate.length()-1);
-  Serial.println(timeStamp);
-}
+//   int splitT = formatDate.indexOf("T");
+//   dayStamp = formatDate.substring(0, splitT);
+//   Serial.println(dayStamp);
+//   timeStamp = formatDate.substring(splitT+1,formatDate.length()-1);
+//   Serial.println(timeStamp);
+// }
 
 //Same as append same as before but checks if can write to
 void writeToFile(fs::FS &fs, const char *path, const char*message) {
@@ -98,8 +98,8 @@ void writeToFile(fs::FS &fs, const char *path, const char*message) {
 
 //Format of the stored data on the micro sd card
 void logSDCard () {
-  dataMessage = String (readingID) + "," + String(dayStamp) //DayStamp dosen't work because .getFormatted dat e dosen work
-  + "," + String(timeStamp) + "," + String(temperature) +  "," + String(humidity) + "\r\n";
+  dataMessage = String (readingID) + "," //DayStamp dosen't work because .getFormatted dat e dosen work
+   + String(temperature) +  "," + String(humidity) + "\r\n";
 
   Serial.print("Save Date: ");
   Serial.println(dataMessage);
@@ -109,18 +109,8 @@ void logSDCard () {
 //Calls the other methods and connects to internet 
 void SDcardsetup() {
   
-  Serial.print("Connecting.....");
-  Serial.print(ssid);
-  WiFi.begin(ssid,password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print("Connecting to host");
-  }
-  Serial.println("");
-  Serial.println("WiFi Connected");
-
-  timeClient.begin();
-  timeClient.setTimeOffset(3600);
+  // timeClient.begin();
+  // timeClient.setTimeOffset(3600);
 
   SD.begin(SDPin);
   if(!SD.begin(SDPin)) {
@@ -151,12 +141,18 @@ void SDcardsetup() {
   //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
 
   getReadings();
-  getTimeStamp();
+  //getTimeStamp();
   logSDCard();
 
   readingID++;
 
-  Serial.println("Sleeping....");
+  ssidCredential();
+  passwordCredential();
+
+  //Serial.println("Sleeping....");
   //esp_deep_sleep_start();
 }
 
+void methodsPassedToMainLoop(){
+Serversetup();
+}
