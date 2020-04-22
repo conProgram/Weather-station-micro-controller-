@@ -9,36 +9,47 @@
 uint64_t uS_TO_S_FACTOR = 1000000;
 uint64_t TIME_TO_SLEEP = 600;
 
-const char*ssid = "LewisiPhone";
-const char*password = "password123";
+const char*ssid = "CiPhone"; //My hotspot name
+const char*password = "conyers98"; //Hotspot password
 
+//Increments how many times the data is appended to the file 
 RTC_DATA_ATTR int readingID = 0;
 String dataMessage;
 
-float temperature;
+float temperature; //Values stored from DHT
 float humidity;
 
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP);
+NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
 
-String formatDate;
-String dayStamp;
-String timeStamp; 
+String formatDate; //Gives out the date (Not working) //Dosent recogise built in feature 
+String dayStamp; //What day the DHT11 Values have been taken
+String timeStamp; // Time of it
 
 //SD card pin is 5 
 #define SDPin 5
+
+//Creates new instance of a file
 File myFile;
 
 
+//Get values
 void getReadings() {
+ // Need to parse dht values here
   temperature = 10;
+  humidity = 30;
+  
   Serial.print("Temperature: ");
   Serial.println(temperature);
+  Serial.print("humidity: ");
+  Serial.println(humidity);
 }
 
+//checks to see if file exists and therefore be appended to 
 void appendFile(fs::FS &fs, const char*path, const char*message) {
   Serial.printf("Appending to File: %s\n", path);
   
+  //Path is the path to the file exists
   myFile = fs.open(path, FILE_APPEND);
   if(!myFile) {
     Serial.println("Failed to open file for appending!!");
@@ -53,11 +64,12 @@ void appendFile(fs::FS &fs, const char*path, const char*message) {
 
 }
 
+//Uses built in methods here
 void getTimeStamp() {
   while(!timeClient.update()) {
     timeClient.forceUpdate();
   }
-  formatDate = timeClient.getFormattedTime();
+  formatDate = timeClient.getFormattedTime(); //This is for the date need to chaneg to format date as date is currently set to time
   Serial.println(formatDate);
 
   int splitT = formatDate.indexOf("T");
@@ -67,6 +79,7 @@ void getTimeStamp() {
   Serial.println(timeStamp);
 }
 
+//Same as append same as before but checks if can write to
 void writeToFile(fs::FS &fs, const char *path, const char*message) {
   Serial.printf("Writing File: %s\n", path);
 
@@ -83,15 +96,17 @@ void writeToFile(fs::FS &fs, const char *path, const char*message) {
   myFile.close();
 }
 
+//Format of the stored data on the micro sd card
 void logSDCard () {
-  dataMessage = String (readingID) + "," + String(dayStamp)
-  + "," + String(timeStamp) + "," + String(temperature) + "\r\n";
+  dataMessage = String (readingID) + "," + String(dayStamp) //DayStamp dosen't work because .getFormatted dat e dosen work
+  + "," + String(timeStamp) + "," + String(temperature) +  "," + String(humidity) + "\r\n";
 
   Serial.print("Save Date: ");
   Serial.println(dataMessage);
   appendFile(SD, "/data.txt" , dataMessage.c_str());
 }
 
+//Calls the other methods and connects to internet 
 void SDcardsetup() {
   
   Serial.print("Connecting.....");
@@ -133,7 +148,7 @@ void SDcardsetup() {
   }
   myFile.close();
 
-  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
+  //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
 
   getReadings();
   getTimeStamp();
@@ -142,6 +157,6 @@ void SDcardsetup() {
   readingID++;
 
   Serial.println("Sleeping....");
-  esp_deep_sleep_start();
+  //esp_deep_sleep_start();
 }
 
