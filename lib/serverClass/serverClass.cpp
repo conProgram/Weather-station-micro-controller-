@@ -3,7 +3,24 @@
 #include <Adafruit_Sensor.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
+#include <pirSensorClass.cpp>
 
+
+void bigSetUpMethod(){
+setupPirClass();
+}
+
+void bigLoopMethod(){
+loopingPirSensor();
+}
+
+
+
+
+
+
+
+//All sever code here
 
 const char*ssid = "CiPhone"; //My hotspot name
 const char*password = "conyers98"; //Hotspot password
@@ -15,7 +32,7 @@ AsyncWebServer server(80);
 
 
 String readDHTTemperature() {
-  float t = 10;
+  float t = tempPassing();
   
     Serial.println(t);
     return String(t);
@@ -23,7 +40,7 @@ String readDHTTemperature() {
 }
 
 String readDHTHumidity() {
-  float h = 30;
+  float h = humPassing();
     Serial.println(h);
     return String(h);
 
