@@ -145,14 +145,10 @@ void SDcardsetup() {
   logSDCard();
 
   readingID++;
-
-  ssidCredential();
-  passwordCredential();
+  Serversetup();
 
   //Serial.println("Sleeping....");
   //esp_deep_sleep_start();
 }
 
-void methodsPassedToMainLoop(){
-Serversetup();
-}
+

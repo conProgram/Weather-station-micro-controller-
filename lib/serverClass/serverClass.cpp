@@ -14,14 +14,6 @@ String dataMessage;
 AsyncWebServer server(80);
 
 
-const char* ssidCredential(){
-  return ssid;
-}
-
-const char* passwordCredential(){
-  return password;
-}
-
 String readDHTTemperature() {
   float t = 10;
   
@@ -36,6 +28,8 @@ String readDHTHumidity() {
     return String(h);
 
 }
+
+
 
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html>
@@ -98,6 +92,8 @@ setInterval(function ( ) {
 }, 10000 ) ;
 </script>
 </html>)rawliteral";
+
+
 
 // Replaces placeholder with DHT values
 String processor(const String& var){
