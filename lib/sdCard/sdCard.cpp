@@ -151,4 +151,11 @@ void SDcardsetup() {
   //esp_deep_sleep_start();
 }
 
-
+//Passing all set up methods to the main class
+void setUpPassing(){
+  bigSetUpMethod();
+}
+//Passing looping methods to the main class
+void loopPassing(){
+bigLoopMethod();
+}

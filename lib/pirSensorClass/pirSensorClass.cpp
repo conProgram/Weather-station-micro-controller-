@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <rgbColorSet.cpp>
 #include <consoleOutputTime.cpp>
-#include <sdCard.cpp>
+
 
 
 //Pin for PIR sensor
@@ -22,6 +22,9 @@ int buttonPresses = 0;
 long previousMillis = 0;
 int interval = 5000;
 
+//Checks to see if system is on or off
+int systemState = 0;
+
 void setupPirClass() {
   dhtClassSetupCalling();
   dhtClassSetupCalling();
@@ -30,16 +33,13 @@ void setupPirClass() {
   outputButtonSetup();
   alarmClassSetupCalling();
   alarmCalled();
-  SDcardsetup();
   pinMode(pirPin, INPUT);
   Serial.println("Waiting on PIR sensor ...");
 }
 
 
 //This is the pir sensor class used for callign all the methods once the system is on
-void loopingPirSensor() {
- 
- //interval = outputButton();
+int loopingPirSensor() {
  
  //Push_button_state = digitalRead(PushButton);
   pirStatus = digitalRead(pirPin);
@@ -102,6 +102,7 @@ void loopingPirSensor() {
   alarmCalled();
   RGBHumClass();
   outputButtonRead();
+  //systemState = 1;
    
   break;
 
@@ -114,8 +115,10 @@ while(currentTime > tenMinsTime){
   currentTime = millis();
   tenMinsTime = millis() + 600000;
   buttonPresses = 2;
+  //systemState = 2;
   break;
 }
+return systemState;
 }
 
 

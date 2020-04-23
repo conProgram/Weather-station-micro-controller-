@@ -5,5 +5,5 @@ String readDHTHumidity();
 String processor();
 void Serversetup();
 void website();
-void bigSetUpMethod();
-void bigLoopMethod();
+// void bigSetUpMethod();
+// void bigLoopMethod();

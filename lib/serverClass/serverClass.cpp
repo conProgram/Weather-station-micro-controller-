@@ -6,18 +6,13 @@
 #include <pirSensorClass.cpp>
 
 
-void bigSetUpMethod(){
-setupPirClass();
-}
+ void bigSetUpMethod(){
+ setupPirClass();
+ }
 
-void bigLoopMethod(){
-loopingPirSensor();
-}
-
-
-
-
-
+ void bigLoopMethod(){
+ loopingPirSensor();
+ }
 
 
 //All sever code here
@@ -34,14 +29,14 @@ AsyncWebServer server(80);
 String readDHTTemperature() {
   float t = tempPassing();
   
-    Serial.println(t);
+   // Serial.println(t);
     return String(t);
   
 }
 
 String readDHTHumidity() {
   float h = humPassing();
-    Serial.println(h);
+   // Serial.println(h);
     return String(h);
 
 }

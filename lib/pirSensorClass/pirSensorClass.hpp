@@ -1,4 +1,4 @@
 void setupPirClass();
-void loopingPirSensor();
+int loopingPirSensor();
 int tempPassing();
 int humPassing();
