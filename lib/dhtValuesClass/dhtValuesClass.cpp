@@ -17,18 +17,20 @@ DHT dht(DHTPIN, DHTTYPE); //Sets sensor pin and which type of sensor we are usin
 	
   	
 }
+
+//Reads the temprature and returns the value to be used by other classes
 float tempValueReturnDHT(){
 	
 	tempratureValue = dht.readTemperature();
     return tempratureValue;
-	Serial.print("Temprature value is ");
-	Serial.println(tempratureValue);
+	// Serial.print("Temprature value is ");
+	// Serial.println(tempratureValue);
 }
 
 float humValueReturnDHT(){
 	
 	humidtyValue = dht.readHumidity();
     return humidtyValue;
-	Serial.print("Humidity value is ");
-	Serial.println(humidtyValue);
-}
+// 	Serial.print("Humidity value is ");
+// 	Serial.println(humidtyValue);
+ }

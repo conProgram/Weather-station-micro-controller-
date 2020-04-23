@@ -19,50 +19,50 @@ void outputButtonSetup(){
 	
 }
 
-
+//Method used to count the output string button presses and set the output time to the appropriate rate
 int outputButton() {
     
 	//Depending on how many button presses a new output time is set
 	switch (outputButtonPresses) {
 	case 1:
-		outputTime = 5000;
+		outputTime = 5000; //5 secs
 		break;
 
 	case 2:
-		outputTime = 30000;
+		outputTime = 30000; //30 secs
 		break;
 
 	case 3:
-		outputTime = 60000;
+		outputTime = 60000; //60 secs
 		break;
 	
 	case 4:
-		outputTime = 120000;
+		outputTime = 120000; // 2 mins
 		break;
 	
 	case 5:
-		outputTime = 300000;
+		outputTime = 300000; // 5 min
 		break;
 
-    case 6: 
+    case 6: //Once button clicks reach 6 output time is then reset back to 5 secs
     outputTime = 5000;
 	outputButtonPresses = 1;
 	Serial.println("Output time reset ...");
     break;
 
+//Default is never run 
 	default:
-		//outputButtonPresses = 1;
-		//Serial.println("Output time reset ...");
 		break;
 
 	}
 
+//Output time is then returned to be used in the PIR class
 return outputTime;
     
   
 }
 
-
+//This method is just for the button itself
 void outputButtonRead(){
     String_button_state = digitalRead(StringButton);
     //If button is pressed is incrments the button counter by 1 
@@ -70,6 +70,8 @@ void outputButtonRead(){
 		outputButtonPresses++;
 		int upToDateOutputTime = outputButton();
 		delay(500);// Used for debouncing 
+
+		//I then converted miliseconds to seconds to make it easier for the user to see the output delay time
 		Serial.print("Output time is now: ");
 		int secondOutputTime = upToDateOutputTime/1000;
 		Serial.print(secondOutputTime);

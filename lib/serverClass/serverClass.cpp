@@ -5,11 +5,11 @@
 #include <WiFiUdp.h>
 #include <pirSensorClass.cpp>
 
-
+//This passes all the setup methods from the PirClass into here to then be passes the main setup()
  void bigSetUpMethod(){
  setupPirClass();
  }
-
+//This passes all the Loop methods from the PirClass into here to then be passes the main loop()
  void bigLoopMethod(){
  loopingPirSensor();
  }
@@ -17,32 +17,30 @@
 
 //All sever code here
 
+//Hotspot credentials are set
+
 const char*ssid = "CiPhone"; //My hotspot name
 const char*password = "conyers98"; //Hotspot password
 
+
 String dataMessage;
-
-
 AsyncWebServer server(80);
 
-
+//Passes the temprature values in from the pirSensor Class
 String readDHTTemperature() {
   float t = tempPassing();
-  
-   // Serial.println(t);
     return String(t);
   
 }
-
+//Same as above with humidity
 String readDHTHumidity() {
   float h = humPassing();
-   // Serial.println(h);
     return String(h);
 
 }
 
 
-
+//The HTML code for the web server page
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html>
 <head>
@@ -109,7 +107,8 @@ setInterval(function ( ) {
 
 // Replaces placeholder with DHT values
 String processor(const String& var){
-  //Serial.println(var);
+  
+  //Defines the temprature and humidity based on the methods at the top of code
   if(var == "TEMPERATURE"){
     return readDHTTemperature();
   }
@@ -119,6 +118,7 @@ String processor(const String& var){
   return String();
 }
 
+//This method sets up the server 
 void Serversetup(){
   
   // Connect to Wi-Fi
@@ -130,7 +130,8 @@ void Serversetup(){
     break;
   }
   
-  Serial.print("Enter this code into your broswer: ");
+  Serial.print("Enter this code into your broswer to view WEB server: ");
+  //Gets the web address to view the web server on your connected hotspot
   Serial.println(WiFi.localIP());
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){

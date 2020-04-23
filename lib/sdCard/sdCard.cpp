@@ -4,23 +4,18 @@
 #include <serverClass.cpp>
 
 
- uint64_t uS_TO_S_FACTOR = 1000000;
- uint64_t TIME_TO_SLEEP = 600;
-
-// const char*ssid = "CiPhone"; //My hotspot name
-// const char*password = "conyers98"; //Hotspot password
+//  uint64_t uS_TO_S_FACTOR = 1000000;
+//  uint64_t TIME_TO_SLEEP = 600;
 
 //Increments how many times the data is appended to the file 
 RTC_DATA_ATTR int readingID = 0;
 
 
-//String dataMessage;
-
 float temperature; //Values stored from DHT
 float humidity;
 
- WiFiUDP ntpUDP;
- NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
+//  WiFiUDP ntpUDP;
+//  NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
 
 String formatDate; //Gives out the date (Not working) //Dosent recogise built in feature 
 String dayStamp; //What day the DHT11 Values have been taken

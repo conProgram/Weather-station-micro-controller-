@@ -104,10 +104,8 @@ int RGBTempClass(){
 	}
 
 // ----------------------------------------------------------------------------------------- //
-//Humidity Code 
-
-//Global 
-//int switchCaseHum;
+//Humidity RGB Code all comments from above apply exactly the same to humidity class
+//Except instead of useign the temprature varible we now use the humidity 
 
 //Humidity RGB
 const int redHum = 34;
