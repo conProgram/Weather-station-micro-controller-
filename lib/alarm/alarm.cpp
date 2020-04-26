@@ -1,6 +1,6 @@
 #include <Arduino.h>
 //Buzzer
-const int pinBuz = 13;
+const int pinBuz = 35;
 
 //Button to snooze the alarm 
 const int snoozeButton = 14;

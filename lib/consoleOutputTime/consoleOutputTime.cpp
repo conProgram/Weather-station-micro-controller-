@@ -52,7 +52,7 @@ int outputButton() {
 
 //Default is never run 
 	default:
-		break;
+	break;
 
 	}
 
@@ -64,7 +64,7 @@ return outputTime;
 
 //This method is just for the button itself
 void outputButtonRead(){
-    String_button_state = digitalRead(StringButton);
+    String_button_state = digitalRead(StringButton); //Need to add second delay
     //If button is pressed is incrments the button counter by 1 
 	while (String_button_state == LOW) {
 		outputButtonPresses++;

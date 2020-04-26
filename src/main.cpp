@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <sdCard.cpp>
+
 void setup() {
   Serial.begin(115200); // opens serial port, sets data rate to bps
 	Serial.println("Serial port open");
@@ -14,3 +15,4 @@ void setup() {
 void loop() {
  loopPassing();
 }
+

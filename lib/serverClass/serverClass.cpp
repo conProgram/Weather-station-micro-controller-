@@ -19,6 +19,8 @@
 
 //Hotspot credentials are set
 
+
+//Need to change from hotpot to external server 
 const char*ssid = "CiPhone"; //My hotspot name
 const char*password = "conyers98"; //Hotspot password
 

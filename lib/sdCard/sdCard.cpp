@@ -34,10 +34,8 @@ void getReadings() {
   temperature = 10;
   humidity = 30;
   
-  Serial.print("Temperature: ");
-  Serial.println(temperature);
-  Serial.print("humidity: ");
-  Serial.println(humidity);
+  Serial.print("SD Card values retrived");
+ 
 }
 
 //checks to see if file exists and therefore be appended to 
@@ -96,8 +94,9 @@ void logSDCard () {
   dataMessage = String (readingID) + "," //DayStamp dosen't work because .getFormatted dat e dosen work
    + String(temperature) +  "," + String(humidity) + "\r\n";
 
-  Serial.print("Save Date: ");
-  Serial.println(dataMessage);
+  //Serial.print("Save Date: ");
+ //
+ //Serial.println(dataMessage);
   appendFile(SD, "/data.txt" , dataMessage.c_str());
 }
 

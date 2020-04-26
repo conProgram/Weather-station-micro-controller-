@@ -108,9 +108,9 @@ int RGBTempClass(){
 //Except instead of useign the temprature varible we now use the humidity 
 
 //Humidity RGB
-const int redHum = 34;
-const int greenHum = 35;
-const int blueHum = 32;
+const int redHum = 21;
+const int greenHum = 13;
+const int blueHum = 25;
 
  void humiditySetUpClass(){
   
