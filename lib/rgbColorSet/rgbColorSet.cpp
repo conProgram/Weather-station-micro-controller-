@@ -1,15 +1,16 @@
 #include <Arduino.h>
-#include <dhtValuesClass.cpp>
 #include <alarm.cpp>
 
 void dhtClassSetupCalling(){
-   dhtSetup();
+  dhtClassSetupCallingOG();
 }
 
 void alarmClassSetupCalling(){
 	alarmSetup();
 }
 void alarmCalled(){
+	tempValueCheck();
+	humValueCheck();
 	whichAlarm();
 	alarmButton();
 }
@@ -36,7 +37,7 @@ const int blueTemp = 17;
 
 int tempReturn(){
 	
-    float t = tempValueReturnDHT(); //Reads temprature stores value in "t"
+    float t = tempPass(); //Reads temprature stores value in "t"
     
     if (isnan(t)) {
 		//Serial.println("Failed to read Temprature from DHT sensor!");
@@ -123,7 +124,7 @@ const int blueHum = 25;
 
 int humReturn(){
 
-float h = humValueReturnDHT();
+float h = humPass();
 
     if (isnan(h)) {
 		Serial.println("Failed to read Humidity from DHT sensor!");

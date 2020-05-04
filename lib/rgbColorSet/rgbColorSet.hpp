@@ -10,7 +10,6 @@ void RGBHumClass();
 void humiditySetUpClass();
 int humReturn();
 void RGBHumClass();
-void alarmClassSetupCalling();
-void alarmCalled();
+
 
 #endif

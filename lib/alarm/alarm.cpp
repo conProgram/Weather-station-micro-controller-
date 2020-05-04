@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include <dhtValuesClass.cpp>
+
 //Buzzer
 const int pinBuz = 35;
 
@@ -15,6 +17,9 @@ int fiveSeconds;
 int twoMins;
 int currentSnoozeTime;
 
+int temp;
+int hum;
+
 //This returns which alarm should go off
 int TempColorTypeReturn;
 int HumColorTypeReturn;
@@ -27,8 +32,59 @@ Serial.println("Buzzer initialised");
 
 }
 
+void dhtClassSetupCallingOG(){
+   dhtSetup();
+}
+
+int tempValueCheck(){
+temp = tempValueReturnDHT(); //Reads temprature stores value in "t"
+
+if (temp > 17 && temp < 24) { //This is for the Green LED values to show all is good
+		TempColorTypeReturn = 1; //Calls first switch case lighting up the green LED
+
+	}
+
+	else if ((temp > 15 && temp < 18) || (temp > 23 && temp < 28)) { // This is the Amber LED Values
+
+		TempColorTypeReturn = 2; //Calls second switch case lighting up the Amber LED
+
+	}
+
+	else { //If the temperature is out of the two bounds of both the Green and Amber LED the Red LED is called
+
+		TempColorTypeReturn = 3; //Calls switch case three light up the Red LED
+
+	}
+	return TempColorTypeReturn;
+}
+
+int humValueCheck(){
+hum = humValueReturnDHT();
+
+ if (hum >= 35 && hum <= 60) {
+
+		HumColorTypeReturn = 1;
+
+	}
+
+	else if ((hum >= 25 && hum <= 34) || (hum >= 60 && hum <= 75)) {
+		HumColorTypeReturn = 2;
+
+	}
+
+	else {
+		HumColorTypeReturn = 3;
+	}
+    
+	return HumColorTypeReturn;
+}
+
+
+
+
+
 void whichAlarm(){
-	
+    
 switch(TempColorTypeReturn){
 	case 1:
 	digitalWrite(pinBuz, 1);
@@ -40,6 +96,7 @@ switch(TempColorTypeReturn){
 	digitalWrite(pinBuz, 0);
 	break;
 }
+
 switch(HumColorTypeReturn){
 
 	case 1:
@@ -69,3 +126,11 @@ void alarmButton(){
 		break;
 
 }}
+
+int tempPass(){
+return temp;
+}
+
+int humPass(){
+return hum;
+}
