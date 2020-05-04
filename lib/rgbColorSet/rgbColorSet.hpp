@@ -1,3 +1,6 @@
+#ifndef rgbColorSet_H_
+#define rgbColorSet_H_
+
 void tempratureSetupClass();
 int tempReturn();
 void RGBTempClass();
@@ -9,3 +12,5 @@ int humReturn();
 void RGBHumClass();
 void alarmClassSetupCalling();
 void alarmCalled();
+
+#endif

@@ -1,3 +1,7 @@
+#ifndef sdCard_H_
+#define sdCard_H_
+
+
 void getReadings();
 void appendFile();
 void getTimeStamp();
@@ -6,3 +10,5 @@ void logSDCard ();
 void SDcardsetup();
 void setUpPassing();
 void loopPassing();
+
+#endif
