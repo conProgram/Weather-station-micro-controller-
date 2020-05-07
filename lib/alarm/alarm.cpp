@@ -11,22 +11,26 @@ const int snoozeButton = 14;
 int alarm_button_state = 0;
 
 //Timeing Varibles used in the buzzer method are declared here 
+//Thirty Seconds 
 int thirtySeconds = 30000;
 int prevLoop = 0;
-
+//Five second timer vaibles
 int fiveSeconds = 5000;
 int prevLoopTwo = 0;
+//snooze button varibles 
+int snoozedState = 0;
+int twoMins = 120000;
+int prevLoopThree = 0;
+//Used to set up snooze timer 
+int counter = 0;
 
-
-
-
+//Used to pass DHT values to RGB class
 int temp;
 int hum;
 
 //This returns which alarm should go off
 int TempColorTypeReturn;
 int HumColorTypeReturn;
-
 
 
 void alarmSetup(){
@@ -39,9 +43,31 @@ void dhtClassSetupCallingOG(){
    dhtSetup();
 }
 
+void twoMinSnooze(){
+
+while(snoozedState == 1){
+	int currentTimeInSnooze = millis();
+	digitalWrite(pinBuz, 0);
+	while(currentTimeInSnooze - prevLoopThree > twoMins){
+		prevLoopThree = currentTimeInSnooze;
+		//By useing a counter we can ensure the loop is set up
+		counter++;
+		//Waits for the loop to run once first to set up the varibles then allows the buzzer to be snoozed
+		if(counter > 1){
+		snoozedState = 0;
+		Serial.println(snoozedState);
+		}
+		break;
+	}
+	break;
+}
+
+}
+
+
 void thirtySecAlarm(){
 	
-	while(alarm_button_state == HIGH){
+	while(snoozedState == 0){
 	int currentTimeHere = millis();
 	
 	if(currentTimeHere - prevLoop > thirtySeconds){
@@ -59,7 +85,7 @@ void thirtySecAlarm(){
 }
 void fiveSecAlarm(){
 	
-	while(alarm_button_state == HIGH){
+	while(snoozedState == 0){
 	int currentTimeHereTwo = millis();
 	
 	if(currentTimeHereTwo - prevLoopTwo > fiveSeconds){
@@ -75,11 +101,6 @@ void fiveSecAlarm(){
 	break;
 }
 }
-
-
-
-
-
 
 
 int tempValueCheck(){
@@ -136,10 +157,12 @@ switch(TempColorTypeReturn){
 
 	case 2:
 	thirtySecAlarm();
+	twoMinSnooze();
 	break;
 	
 	case 3:
 	fiveSecAlarm();
+	twoMinSnooze();
 	break;
 	}
 
@@ -150,26 +173,35 @@ switch(HumColorTypeReturn){
 	
 	case 2:
 	thirtySecAlarm();
+	twoMinSnooze();
 	break;
 	
 	case 3:
 	fiveSecAlarm();
+	twoMinSnooze();
 	break;
 	}
 }
 
 void alarmButton(){
-	    //Alarm button read in
+	//Alarm button read in
 	alarm_button_state = digitalRead(snoozeButton);
 	
 	//If alarm/snooze button is pressed do this
 	while(alarm_button_state == LOW){
-		Serial.println("Alarm Snoozed");
+		Serial.println("Alarm Snoozed for 2 mins");
 		digitalWrite(pinBuz, 0);
-		delay(100);//debounce	
+		delay(500);//debounce here so dosen't delay output to user
+		
+		snoozedState = 1;
+		twoMinSnooze();
 		break;
 
 }}
+
+
+
+
 
 int tempPass(){
 return temp;
