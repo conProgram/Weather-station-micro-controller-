@@ -7,11 +7,12 @@ int humValueCheck();
 
 void alarmSetup();
 void dhtClassSetupCallingOG();
-int whichAlarm();
-int alarmIntervals();
+void whichAlarm();
 void alarmButton();
 int tempPass();
 int humPass();
+void thirtySecAlarm();
+void fiveSecAlarm();
 
 
 #endif

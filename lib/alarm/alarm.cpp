@@ -11,17 +11,14 @@ const int snoozeButton = 14;
 int alarm_button_state = 0;
 
 //Timeing Varibles used in the buzzer method are declared here 
-int currentTimeTemp;
-int thirtySecondsTemp;
-int fiveSecondsTemp;
+int thirtySeconds = 30000;
+int prevLoop = 0;
 
-int currentTimeHum;
-int thirtySecondsHum;
-int fiveSecondsHum;
+int fiveSeconds = 5000;
+int prevLoopTwo = 0;
 
-int currentBuzzerTime;
-int twoMins;
-int currentSnoozeTime;
+
+
 
 int temp;
 int hum;
@@ -42,7 +39,51 @@ void dhtClassSetupCallingOG(){
    dhtSetup();
 }
 
+void thirtySecAlarm(){
+	
+	while(alarm_button_state == HIGH){
+	int currentTimeHere = millis();
+	
+	if(currentTimeHere - prevLoop > thirtySeconds){
+		prevLoop = currentTimeHere;
+
+	digitalWrite(pinBuz, 1);
+	delay(1000);
+		
+	}
+	else{
+		digitalWrite(pinBuz, 0);
+	}
+	break;
+}
+}
+void fiveSecAlarm(){
+	
+	while(alarm_button_state == HIGH){
+	int currentTimeHereTwo = millis();
+	
+	if(currentTimeHereTwo - prevLoopTwo > fiveSeconds){
+		prevLoopTwo = currentTimeHereTwo;
+
+	digitalWrite(pinBuz, 1);
+	delay(1000);
+		
+	}
+	else{
+		digitalWrite(pinBuz, 0);
+	}
+	break;
+}
+}
+
+
+
+
+
+
+
 int tempValueCheck(){
+
 temp = tempValueReturnDHT(); //Reads temprature stores value in "t"
 
 if (temp > 17 && temp < 24) { //This is for the Green LED values to show all is good
@@ -86,94 +127,35 @@ hum = humValueReturnDHT();
 	return HumColorTypeReturn;
 }
 
-int whichAlarm(){
+void whichAlarm(){
     
 switch(TempColorTypeReturn){
-	case 2:
-	return thirtySecondsTemp = millis() + 30000;
+	case 1:
+	//Does nothing as no buzzer is needed for green values
 	break;
-	case 3:
-	return fiveSecondsTemp = millis() + 5000;
-	break;
-	default:
-	digitalWrite(pinBuz, 0);
 
-}
+	case 2:
+	thirtySecAlarm();
+	break;
+	
+	case 3:
+	fiveSecAlarm();
+	break;
+	}
 
 switch(HumColorTypeReturn){
+	case 1:
+	//Does nothing as no buzzer is needed for green values
+	break;
+	
 	case 2:
-	thirtySecondsHum = millis() + 30000;
+	thirtySecAlarm();
 	break;
+	
 	case 3:
-	fiveSecondsHum = millis() + 5000;
+	fiveSecAlarm();
 	break;
-	default:
-	digitalWrite(pinBuz, 0);
-}
-
-}
-
-int alarmIntervals(){
-	
-	if(HumColorTypeReturn == 1 && TempColorTypeReturn < 2){
-	digitalWrite(pinBuz, 0);
-	return currentTimeHum = millis();
-	return thirtySecondsHum = millis() + 30000;
-}
-
-else if (HumColorTypeReturn == 2){
-	digitalWrite(pinBuz, 1);
-	delay(1000);
-	digitalWrite(pinBuz, 0);
-	return currentTimeHum = millis();
-	
-	while(currentTimeHum == thirtySecondsHum){
-		digitalWrite(pinBuz, 1);
-		return thirtySecondsHum = millis() + 30000;
-		break;
 	}
-
-}
-else if (HumColorTypeReturn == 3)
-{
-	digitalWrite(pinBuz, 1);
-	delay(1000);
-	digitalWrite(pinBuz, 0);
-	return currentTimeHum = millis();
-	while(currentTimeHum == fiveSecondsHum){
-		digitalWrite(pinBuz, 1);
-		return fiveSecondsHum = millis() + 5000;
-		break;
-}
-}
-
-else if(TempColorTypeReturn == 1 && HumColorTypeReturn < 2){
-	digitalWrite(pinBuz, 0);	
-	return currentTimeTemp = millis();
-	return thirtySecondsTemp = millis() + 30000;
-}
-else if (TempColorTypeReturn == 2){
-currentTimeTemp = millis();
-	while(currentTimeTemp == thirtySecondsTemp){
-		digitalWrite(pinBuz, 1);
-		delay(1000);
-		return currentTimeTemp = millis();
-		return thirtySecondsTemp = millis() + 30000;
-		break;
-	}
-}
-else if (TempColorTypeReturn == 3)
-{
-digitalWrite(pinBuz, 1);
-	delay(1000);
-	digitalWrite(pinBuz, 0);
-	return currentTimeTemp = millis();
-	while(currentTimeTemp == fiveSecondsHum){
-		digitalWrite(pinBuz, 1);
-		return fiveSecondsTemp = millis() + 5000;
-		break;	
-}
-}
 }
 
 void alarmButton(){
@@ -184,9 +166,7 @@ void alarmButton(){
 	while(alarm_button_state == LOW){
 		Serial.println("Alarm Snoozed");
 		digitalWrite(pinBuz, 0);
-		TempColorTypeReturn = 3;
-		HumColorTypeReturn = 3;
-		delay(1000);//debounce	
+		delay(100);//debounce	
 		break;
 
 }}
@@ -198,3 +178,4 @@ return temp;
 int humPass(){
 return hum;
 }
+
