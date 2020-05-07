@@ -15,7 +15,7 @@ void setup() {
 
 //All looping methods are passed here from sdCard class
 void loop() {
- 
+ twoMinsSDCardWrite();
  loopPassing();
 }
 

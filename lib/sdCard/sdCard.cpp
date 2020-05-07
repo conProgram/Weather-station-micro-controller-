@@ -156,18 +156,18 @@ void setUpPassing(){
 }
 //Passing looping methods to the main class
 void loopPassing(){
+bigLoopMethod();
+}
 
-int currentTimeForSDWrite = millis();
-	
+void twoMinsSDCardWrite(){
+  int currentTimeForSDWrite = millis();
 	if(currentTimeForSDWrite - prevWrite > twoMinsToWrite){
 		prevWrite = currentTimeForSDWrite;
     getReadings();
     //getTimeStamp();
     logSDCard();
+    Serial.println("Temprature and humidty now stored on SD card");
+    Serial.println("Values stored every 2 mins");
 
 	}
-	else{
-		bigLoopMethod();
-	}
-
 }

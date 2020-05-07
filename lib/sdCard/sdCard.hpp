@@ -10,5 +10,6 @@ void logSDCard ();
 void SDcardsetup();
 void setUpPassing();
 void loopPassing();
+void twoMinsSDCardWrite();
 
 #endif
