@@ -29,16 +29,31 @@ String dataMessage;
 AsyncWebServer server(80);
 
 //Passes the temprature values in from the pirSensor Class
-String readDHTTemperature() {
+int readDHTTemperature() {
   float t = tempPassing();
-    return String(t);
+    return int(t);
   
 }
 //Same as above with humidity
-String readDHTHumidity() {
+int readDHTHumidity() {
   float h = humPassing();
-    return String(h);
+    return int(h);
 
+}
+
+String stringConvertTemp(){
+String newTempString;
+int oldValue = readDHTTemperature();
+newTempString = String(oldValue);
+
+return newTempString;
+}
+String stringConvertHum(){
+String newHumString;
+int oldValueTwo = readDHTHumidity();
+newHumString = String(oldValueTwo);
+
+return newHumString;
 }
 
 
@@ -112,13 +127,14 @@ String processor(const String& var){
   
   //Defines the temprature and humidity based on the methods at the top of code
   if(var == "TEMPERATURE"){
-    return readDHTTemperature();
+    return stringConvertTemp();
   }
   else if(var == "HUMIDITY"){
-    return readDHTHumidity();
+    return stringConvertHum();
   }
   return String();
 }
+
 
 //This method sets up the server 
 void Serversetup(){
@@ -140,10 +156,10 @@ void Serversetup(){
     request->send_P(200, "text/html", index_html, processor);
   });
   server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", readDHTTemperature().c_str());
+    request->send_P(200, "text/plain", stringConvertTemp().c_str());
   });
   server.on("/humidity", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", readDHTHumidity().c_str());
+    request->send_P(200, "text/plain", stringConvertHum().c_str());
   });
 
   // Start server

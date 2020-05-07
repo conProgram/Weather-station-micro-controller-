@@ -4,8 +4,8 @@
 
 const char* ssidCredential();
 const char* passwordCredential();
-String readDHTTemperature();
-String readDHTHumidity();
+int readDHTTemperature();
+int readDHTHumidity();
 String processor();
 void Serversetup();
 void website();

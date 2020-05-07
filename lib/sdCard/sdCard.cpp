@@ -27,12 +27,17 @@ String timeStamp; // Time of it
 //Creates new instance of a file
 File myFile;
 
+//Timing varibles 
+int twoMinsToWrite = 120000;
+int prevWrite = 0;
+
+
 
 //Get values
 void getReadings() {
  // Need to parse dht values here
-  temperature = 10;
-  humidity = 30;
+  temperature = readDHTTemperature();
+  humidity = readDHTHumidity();
   
   Serial.print("SD Card values retrived");
  
@@ -91,7 +96,7 @@ void writeToFile(fs::FS &fs, const char *path, const char*message) {
 
 //Format of the stored data on the micro sd card
 void logSDCard () {
-  dataMessage = String (readingID) + "," //DayStamp dosen't work because .getFormatted dat e dosen work
+  dataMessage = String (readingID) + "," //DayStamp dosen't work because .getFormatted date dosent work
    + String(temperature) +  "," + String(humidity) + "\r\n";
 
   //Serial.print("Save Date: ");
@@ -151,5 +156,18 @@ void setUpPassing(){
 }
 //Passing looping methods to the main class
 void loopPassing(){
-bigLoopMethod();
+
+int currentTimeForSDWrite = millis();
+	
+	if(currentTimeForSDWrite - prevWrite > twoMinsToWrite){
+		prevWrite = currentTimeForSDWrite;
+    getReadings();
+    //getTimeStamp();
+    logSDCard();
+
+	}
+	else{
+		bigLoopMethod();
+	}
+
 }
