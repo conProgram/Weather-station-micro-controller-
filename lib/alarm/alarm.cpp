@@ -23,7 +23,6 @@ int twoMins = 120000;
 int prevLoopThree = 0;
 //Used to set up snooze timer 
 int counter = 0;
-
 //Used to pass DHT values to RGB class
 int temp;
 int hum;
@@ -211,3 +210,30 @@ int humPass(){
 return hum;
 }
 
+void outputButtonRead(){
+	String_button_state = digitalRead(StringButton); //Need to add second delay
+	
+	if(String_button_state == HIGH){
+		startPressed = millis();
+	}
+	
+    //If button is pressed is incrments the button counter by 1 
+	else {
+		endPressed = millis();
+		holdTime = endPressed - startPressed;
+
+
+		if(holdTime > 999){
+		outputButtonPresses++;
+		int upToDateOutputTime = outputButton();
+		delay(500);// Used for debouncing 
+		//I then converted miliseconds to seconds to make it easier for the user to see the output delay time
+		Serial.print("Output time is now: ");
+		int secondOutputTime = upToDateOutputTime/1000;
+		Serial.print(secondOutputTime);
+		Serial.println(" seconds");
+		Serial.println("Press Button again to change output time");
+		holdTime = 0;
+		
+		
+	}

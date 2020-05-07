@@ -9,16 +9,10 @@ int outputButtonPresses = 1;
 //Used for the state of the output time button
 int String_button_state = 0;
 
-//Varibles used to determin if button has been held down for a compelete section 
-int buttonTime;
-int buttonAfterOneSecond;
-
-int buttonState = 0;     // current state of the button
-int lastButtonState = 0; // previous state of the button
+//Varibles for button held down for a complete second per Daves request 
 int startPressed = 0;    // the moment the button was pressed
 int endPressed = 0;      // the moment the button was released
 int holdTime = 0;        // how long the button was hold
-int idleTime = 0;        // how long the button was idle
 
 //Set up class for the string output button 
 void outputButtonSetup(){
@@ -75,33 +69,32 @@ return outputTime;
 
 //This method is just for the button itself
 void outputButtonRead(){
-	
-	//startPressed = millis();
-    
 	String_button_state = digitalRead(StringButton); //Need to add second delay
+	
+	if(String_button_state == HIGH){
+		startPressed = millis();
+	}
+	
     //If button is pressed is incrments the button counter by 1 
-	while (String_button_state == LOW) {
-		//endPressed = millis();
-		//holdTime = endPressed - startPressed;
-		//break;
-		//}
-		//Used to calcuate is button has been held down for a whole second
-		//while (holdTime > 999) {
+	else {
+		endPressed = millis();
+		holdTime = endPressed - startPressed;
+
+
+		if(holdTime > 999){
 		outputButtonPresses++;
 		int upToDateOutputTime = outputButton();
 		delay(500);// Used for debouncing 
-
 		//I then converted miliseconds to seconds to make it easier for the user to see the output delay time
 		Serial.print("Output time is now: ");
 		int secondOutputTime = upToDateOutputTime/1000;
 		Serial.print(secondOutputTime);
 		Serial.println(" seconds");
 		Serial.println("Press Button again to change output time");
-		//holdTime = 0;
-		break;
+		holdTime = 0;
+		
 		
 	}
-
-
+}
 }
 
