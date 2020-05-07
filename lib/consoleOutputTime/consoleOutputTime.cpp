@@ -92,6 +92,7 @@ void outputButtonRead(){
 		Serial.println(" seconds");
 		Serial.println("Press Button again to change output time");
 		holdTime = 0;
+		delay(500);//Gives user time to realse the button
 		
 		
 	}
