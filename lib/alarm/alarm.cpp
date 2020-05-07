@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <dhtValuesClass.cpp>
+#include <oLedDisplay.cpp>
 
 //Buzzer
 const int pinBuz = 2;
@@ -40,6 +41,7 @@ Serial.println("Buzzer initialised");
 
 void dhtClassSetupCallingOG(){
    dhtSetup();
+   screenSetup();
 }
 
 void twoMinSnooze(){
