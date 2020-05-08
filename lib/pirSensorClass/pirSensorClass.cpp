@@ -42,9 +42,12 @@ void setupPirClass() {
   alarmCalled();
   //Sets PIR sesnsor input
   pinMode(pirPin, INPUT);
+  pirStatus = LOW;
   Serial.println("Waiting on PIR sensor ...");
 
 }
+
+
 
 void outputToConsole(){
     interval = outputButton();
@@ -64,6 +67,11 @@ void outputToConsole(){
       }
 }
 
+void IRAM_ATTR detectsMovement() {
+  buttonPresses = 1;
+  systemState = 1;
+}
+
 //This is the pir sensor class used for callign all the methods once the system is on
 void loopingPirSensor() {
  //This is old code from when PIR sensor was just a push button left this so you can see improvment 
@@ -71,9 +79,12 @@ void loopingPirSensor() {
 
     //Checks to see if PIR sensor has been activated or not
     pirStatus = digitalRead(pirPin);
+
+
+    pinMode(pirPin, INPUT_PULLUP);
+    // Set motionSensor pin as interrupt, assign interrupt function and set RISING mode
+     attachInterrupt(digitalPinToInterrupt(pirPin), detectsMovement, RISING);
   
-  //Due to my PIR Sensor not working I have had to set the state to HIGH manually to demonstrate it working
-   pirStatus = HIGH;
 	 if (pirStatus == HIGH) {
      //setting button presses to 1 rather than useing ++ as dont want the PIR sensor spamming the counter 
  		buttonPresses = 1;
