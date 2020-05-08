@@ -4,6 +4,7 @@
 #define DHTPIN 15 //Pin of sensor
 #define DHTTYPE DHT11   // DHT 11
 
+
 DHT dht(DHTPIN, DHTTYPE); //Sets sensor pin and which type of sensor we are using in the DHL
 
 //Global 
@@ -19,7 +20,7 @@ DHT dht(DHTPIN, DHTTYPE); //Sets sensor pin and which type of sensor we are usin
 }
 
 //Reads the temprature and returns the value to be used by other classes
-float tempValueReturnDHT(){
+float tempValueReturnFromDHTClass(){
 	
 	tempratureValue = dht.readTemperature();
     return tempratureValue;
@@ -27,7 +28,7 @@ float tempValueReturnDHT(){
 	// Serial.println(tempratureValue);
 }
 
-float humValueReturnDHT(){
+float humValueReturnFromDHTClass(){
 	
 	humidtyValue = dht.readHumidity();
     return humidtyValue;

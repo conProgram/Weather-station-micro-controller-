@@ -2,7 +2,7 @@
 #define dhtValuesClass_H_
 
 void dhtSetup();
-float tempValueReturnDHT();
-float humValueReturnDHT();
+float tempValueReturnFromDHTClass();
+float humValueReturnFromDHTClass();
 
 #endif

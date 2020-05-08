@@ -3,5 +3,7 @@
 
 void screenSetup();
 void screenOutput();
+int tempValueReturnDHT();
+int humValueReturnDHT();
 
 #endif

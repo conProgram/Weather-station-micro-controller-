@@ -91,6 +91,7 @@ void outputButtonRead(){
 		Serial.print(secondOutputTime);
 		Serial.println(" seconds");
 		Serial.println("Press Button again to change output time");
+		 Serial.println("New code being run ");
 		holdTime = 0;
 		delay(500);//Gives user time to realse the button
 		
