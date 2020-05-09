@@ -19,6 +19,9 @@ const int displayButtonPin = 32;
 //This varible is used to determin what to output on the OLED display 
 int theOutput;
 String outputType;
+String datatype;
+
+
 
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
@@ -70,11 +73,6 @@ int whichDisplayValue(){
     theOutput = humValue;
     break;
     case 3:
-    theOutput = 1;
-    break;
-    case 4:
-    display.print("Output reset");
-    delay(1000);
     displayButtonPresses = 1;
     break;
   }
@@ -86,15 +84,15 @@ String whichDisplayType(){
   switch (displayButtonPresses){
     case 1:
     outputType = "The Temprature is: ";
+    datatype = " degrees celsius";
     break;
     case 2:
     outputType = "The humidity is: ";
-    break;
-    case 3:
-    outputType = "Created by the Boolean Boys";
+    datatype = " %";
     break;
   }
   return outputType;
+  
 }
 
 
@@ -105,8 +103,9 @@ void screenOutput(){
   display.setTextColor(WHITE);
   display.setCursor(0, 10);
   // Display static text
-  display.print(outputType);
-  display.println(theOutput);  
+  display.println(outputType);
+  display.print(theOutput);  
+  display.println(datatype);
   display.display();
 }
 
