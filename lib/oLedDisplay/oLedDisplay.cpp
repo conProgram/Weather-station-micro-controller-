@@ -92,6 +92,7 @@ String whichDisplayType(){
     break;
   }
   return outputType;
+  return datatype;
   
 }
 

@@ -14,8 +14,8 @@ RTC_DATA_ATTR int readingID = 0;
 float temperature; //Values stored from DHT
 float humidity;
 
-//  WiFiUDP ntpUDP;
-//  NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
+  WiFiUDP ntpUDP;
+  NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
 
 String formatDate; //Gives out the date (Not working) //Dosent recogise built in feature 
 String dayStamp; //What day the DHT11 Values have been taken
@@ -62,20 +62,20 @@ void appendFile(fs::FS &fs, const char*path, const char*message) {
 
 }
 
-// //Uses built in methods here
-// void getTimeStamp() {
-//   while(!timeClient.update()) {
-//     timeClient.forceUpdate();
-//   }
-//   formatDate = timeClient.getFormattedTime(); //This is for the date need to chaneg to format date as date is currently set to time
-//   Serial.println(formatDate);
+//Uses built in methods here
+void getTimeStamp() {
+  while(!timeClient.update()) {
+    timeClient.forceUpdate();
+  }
+  formatDate = timeClient.getFormattedTime(); //This is for the date need to chaneg to format date as date is currently set to time
+  Serial.println(formatDate);
 
-//   int splitT = formatDate.indexOf("T");
-//   dayStamp = formatDate.substring(0, splitT);
-//   Serial.println(dayStamp);
-//   timeStamp = formatDate.substring(splitT+1,formatDate.length()-1);
-//   Serial.println(timeStamp);
-// }
+  int splitT = formatDate.indexOf("T");
+  dayStamp = formatDate.substring(0, splitT);
+  Serial.println(dayStamp);
+  timeStamp = formatDate.substring(splitT+1,formatDate.length()-1);
+  Serial.println(timeStamp);
+}
 
 //Same as append same as before but checks if can write to
 void writeToFile(fs::FS &fs, const char *path, const char*message) {
@@ -96,7 +96,7 @@ void writeToFile(fs::FS &fs, const char *path, const char*message) {
 
 //Format of the stored data on the micro sd card
 void logSDCard () {
-  dataMessage = String (readingID) + "," //DayStamp dosen't work because .getFormatted date dosent work
+  dataMessage = String (readingID) + "," + String(timeStamp) +  "," //DayStamp dosen't work because .getFormatted date dosent work
    + String(temperature) +  "," + String(humidity) + "\r\n";
 
   //Serial.print("Save Date: ");
@@ -164,7 +164,7 @@ void twoMinsSDCardWrite(){
 	if(currentTimeForSDWrite - prevWrite > twoMinsToWrite){
 		prevWrite = currentTimeForSDWrite;
     getReadings();
-    //getTimeStamp();
+    getTimeStamp();
     logSDCard();
     Serial.println("Temprature and humidty now stored on SD card");
     Serial.println("Values stored every 2 mins");
