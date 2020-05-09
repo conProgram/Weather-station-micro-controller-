@@ -40,6 +40,7 @@ Serial.println("Buzzer initialised");
 
 void dhtClassSetupCallingOG(){
    dhtSetup();
+   screenSetup();
 }
 
 void twoMinSnooze(){
@@ -54,6 +55,7 @@ while(snoozedState == 1){
 		//Waits for the loop to run once first to set up the varibles then allows the buzzer to be snoozed
 		if(counter > 1){
 		snoozedState = 0;
+		counter = 0;
 		Serial.println("Alarm snooze compelete");
 		}
 		break;
@@ -103,7 +105,8 @@ void fiveSecAlarm(){
 
 
 int tempValueCheck(){
-screenSetup();
+mainOledMethod();
+
 temp = tempValueReturnDHT(); //Reads temprature stores value in "t"
 
 if (temp > 17 && temp < 24) { //This is for the Green LED values to show all is good

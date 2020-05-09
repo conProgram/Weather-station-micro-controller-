@@ -96,7 +96,8 @@ void loopingPirSensor() {
   //Aslong as currrent time is less than 10 mins it will run the code 
   while(currentPirTime - previousMillis > tenMinsTime){
   previousMillis = currentPirTime;
-  systemState = 1;
+  buttonPresses = 2;
+  systemState = 0;
   break;
   }
 
@@ -129,6 +130,7 @@ void loopingPirSensor() {
     //This use case is just a temporary state this is just for if the system turns off and it tells the user
   	case 2:
 		Serial.println("system off...");
+    Serial.println("Activate the PIR sensor to restart the system");
     buttonPresses = 0;
 		break;
 	}

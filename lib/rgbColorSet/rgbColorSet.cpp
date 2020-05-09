@@ -40,8 +40,8 @@ int tempReturn(){
     float t = tempPass(); //Reads temprature stores value in "t"
     
     if (isnan(t)) {
-		//Serial.println("Failed to read Temprature from DHT sensor!");
-		//Serial.println("Ensure DHT is connected correctly");
+		Serial.println("Failed to read Temprature from DHT sensor!");
+		Serial.println("Ensure DHT is connected correctly");
 		delay(1000);
 	}
 
@@ -99,7 +99,6 @@ int RGBTempClass(){
 		//Serial.print("Switch Case value is: ");
 		Serial.print(switchCaseTemp);
 		break;
-
 	}
 	return TempColorTypeReturn;
 	}

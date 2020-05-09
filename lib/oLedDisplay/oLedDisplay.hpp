@@ -5,5 +5,5 @@ void screenSetup();
 void screenOutput();
 int tempValueReturnDHT();
 int humValueReturnDHT();
-
+void mainOledMethod();
 #endif
