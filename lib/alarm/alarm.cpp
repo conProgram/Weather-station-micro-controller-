@@ -158,11 +158,13 @@ switch(TempColorTypeReturn){
 	break;
 
 	case 2:
+	alarmButton();
 	thirtySecAlarm();
 	twoMinSnooze();
 	break;
 	
 	case 3:
+	alarmButton();
 	fiveSecAlarm();
 	twoMinSnooze();
 	break;
@@ -174,11 +176,13 @@ switch(HumColorTypeReturn){
 	break;
 	
 	case 2:
+	alarmButton();
 	thirtySecAlarm();
 	twoMinSnooze();
 	break;
 	
 	case 3:
+	alarmButton();
 	fiveSecAlarm();
 	twoMinSnooze();
 	break;

@@ -12,7 +12,6 @@ void alarmCalled(){
 	tempValueCheck();
 	humValueCheck();
 	whichAlarm();
-	alarmButton();
 }
 
 int switchCaseTemp;
