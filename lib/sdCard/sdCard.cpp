@@ -39,13 +39,13 @@ void getReadings() {
   temperature = readDHTTemperature();
   humidity = readDHTHumidity();
   
-  Serial.print("SD Card values retrived");
+  Serial.println("SD Card values retrived");
  
 }
 
 //checks to see if file exists and therefore be appended to 
 void appendFile(fs::FS &fs, const char*path, const char*message) {
-  Serial.printf("Appending to File: %s\n", path);
+  Serial.printf("Appending data to File: %s\n", path);
   
   //Path is the path to the file exists
   myFile = fs.open(path, FILE_APPEND);
@@ -54,7 +54,7 @@ void appendFile(fs::FS &fs, const char*path, const char*message) {
     return;
   }
   if(myFile.print(message)) {
-    Serial.println("Message appended Successfully");
+    Serial.println("Values appended Successfully");
   } else {
     Serial.println("Append unsuccessful");
   }
@@ -68,13 +68,13 @@ void getTimeStamp() {
     timeClient.forceUpdate();
   }
   formatDate = timeClient.getFormattedTime(); //This is for the date need to chaneg to format date as date is currently set to time
-  Serial.println(formatDate);
+  //Serial.println(formatDate);
 
   int splitT = formatDate.indexOf("T");
   dayStamp = formatDate.substring(0, splitT);
-  Serial.println(dayStamp);
+  //Serial.println(dayStamp);
   timeStamp = formatDate.substring(splitT+1,formatDate.length()-1);
-  Serial.println(timeStamp);
+  //Serial.println(timeStamp);
 }
 
 //Same as append same as before but checks if can write to
@@ -96,11 +96,9 @@ void writeToFile(fs::FS &fs, const char *path, const char*message) {
 
 //Format of the stored data on the micro sd card
 void logSDCard () {
-  dataMessage = String (readingID) + "," + String(timeStamp) +  "," //DayStamp dosen't work because .getFormatted date dosent work
-   + String(temperature) +  "," + String(humidity) + "\r\n";
+  dataMessage = "The reading is: " + String (readingID) + " The time the reading took place: " + String(timeStamp) +  " The temperature value is: " 
+   + String(temperature) +  " The humidity Value is: " + String(humidity) + "\r\n";
 
-  //Serial.print("Save Date: ");
- //
  //Serial.println(dataMessage);
   appendFile(SD, "/data.txt" , dataMessage.c_str());
 }
@@ -108,9 +106,6 @@ void logSDCard () {
 //Calls the other methods and connects to internet 
 void SDcardsetup() {
   
-  // timeClient.begin();
-  // timeClient.setTimeOffset(3600);
-
   SD.begin(SDPin);
   if(!SD.begin(SDPin)) {
     Serial.println("Card mount failed");
@@ -166,8 +161,9 @@ void twoMinsSDCardWrite(){
     getReadings();
     getTimeStamp();
     logSDCard();
+    readingID++;
     Serial.println("Temprature and humidty now stored on SD card");
-    Serial.println("Values stored every 2 mins");
+    Serial.println("Values are stored every 2 mins");
 
 	}
 }
