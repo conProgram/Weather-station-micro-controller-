@@ -14,7 +14,6 @@
  loopingPirSensor();
  }
 
-
 //All sever code here
 
 //Hotspot credentials are set
@@ -23,6 +22,14 @@
 //Need to change from hotpot to external server 
 const char*ssid = "CiPhone"; //My hotspot name
 const char*password = "conyers98"; //Hotspot password
+
+//Timeing varibles
+int thirtySecondServerUpdate = 30000;
+int prevTimer = 0; 
+
+//To string varibles for web code
+String newTempString;
+String newHumString;
 
 
 String dataMessage;
@@ -41,20 +48,30 @@ int readDHTHumidity() {
 
 }
 
+
+//Converts int values to strings so can be used on the web server 
 String stringConvertTemp(){
-String newTempString;
+//if statment used to update values every 30 seconds  
+int currentTimeSever = millis();
+if(currentTimeSever - prevTimer > thirtySecondServerUpdate){
+prevTimer = currentTimeSever;
 int oldValue = readDHTTemperature();
 newTempString = String(oldValue);
 
-return newTempString;
+
 }
+return newTempString;}
+
 String stringConvertHum(){
-String newHumString;
+int currentTimeSeverTwo = millis(); 
+if(currentTimeSeverTwo - prevTimer > thirtySecondServerUpdate){  
+prevTimer = currentTimeSeverTwo;
 int oldValueTwo = readDHTHumidity();
 newHumString = String(oldValueTwo);
 
-return newHumString;
 }
+
+return newHumString;}
 
 
 //The HTML code for the web server page

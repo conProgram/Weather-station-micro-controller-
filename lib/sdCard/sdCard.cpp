@@ -96,7 +96,8 @@ void writeToFile(fs::FS &fs, const char *path, const char*message) {
 
 //Format of the stored data on the micro sd card
 void logSDCard () {
-  dataMessage = "The reading is: " + String (readingID) + " The time the reading took place: " + String(timeStamp) +  " The temperature value is: " 
+  readingID++;
+  dataMessage = "The reading is: " + String (readingID) + " The time the reading took place: " + String(dayStamp) +  " The temperature value is: " 
    + String(temperature) +  " The humidity Value is: " + String(humidity) + "\r\n";
 
  //Serial.println(dataMessage);
@@ -161,7 +162,6 @@ void twoMinsSDCardWrite(){
     getReadings();
     getTimeStamp();
     logSDCard();
-    readingID++;
     Serial.println("Temprature and humidty now stored on SD card");
     Serial.println("Values are stored every 2 mins");
 

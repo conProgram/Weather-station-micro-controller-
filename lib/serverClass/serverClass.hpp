@@ -7,7 +7,11 @@ const char* passwordCredential();
 int readDHTTemperature();
 int readDHTHumidity();
 void Serversetup();
-void website();
+void loopServer();
+void handle_OnConnect();
+void handle_NotFound();
+
+//void website();
 // void bigSetUpMethod();
 // void bigLoopMethod();
 
