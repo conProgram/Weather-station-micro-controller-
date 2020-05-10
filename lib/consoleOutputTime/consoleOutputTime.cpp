@@ -32,24 +32,27 @@ int outputButton() {
 	case 1:
 		outputTime = 5000; //5 secs
 		break;
-
 	case 2:
-		outputTime = 30000; //30 secs
+		outputTime = 10000; //10 secs
 		break;
 
 	case 3:
+		outputTime = 30000; //30 secs
+		break;
+
+	case 4:
 		outputTime = 60000; //60 secs
 		break;
 	
-	case 4:
+	case 5:
 		outputTime = 120000; // 2 mins
 		break;
 	
-	case 5:
+	case 6:
 		outputTime = 300000; // 5 min
 		break;
 
-    case 6: //Once button clicks reach 6 output time is then reset back to 5 secs
+    case 7: //Once button clicks reach 6 output time is then reset back to 5 secs
     outputTime = 5000;
 	outputButtonPresses = 1;
 	Serial.println("Output time reset ...");
