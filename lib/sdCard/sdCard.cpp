@@ -4,22 +4,19 @@
 #include <serverClass.cpp>
 
 
-//  uint64_t uS_TO_S_FACTOR = 1000000;
-//  uint64_t TIME_TO_SLEEP = 600;
-
 //Increments how many times the data is appended to the file 
-RTC_DATA_ATTR int readingID = 0;
-
+int readingID = 0;
 
 float temperature; //Values stored from DHT
 float humidity;
 
-  WiFiUDP ntpUDP;
-  NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP); //Built in server timer, can time something once connected to hotspot
 
 String formatDate; //Gives out the date (Not working) //Dosent recogise built in feature 
+
 String dayStamp; //What day the DHT11 Values have been taken
-String timeStamp; // Time of it
+String timeStamp; // Time the value was taken
 
 //SD card pin is 5 
 #define SDPin 5
@@ -27,20 +24,17 @@ String timeStamp; // Time of it
 //Creates new instance of a file
 File myFile;
 
-//Timing varibles 
+//Timing varibles for two min write time 
 int twoMinsToWrite = 120000;
 int prevWrite = 0;
 
 
 
-//Get values
+//Get temp and humidity values
 void getReadings() {
- // Need to parse dht values here
   temperature = readDHTTemperature();
   humidity = readDHTHumidity();
-  
   Serial.println("SD Card values retrived");
- 
 }
 
 //checks to see if file exists and therefore be appended to 
@@ -53,6 +47,7 @@ void appendFile(fs::FS &fs, const char*path, const char*message) {
     Serial.println("Failed to open file for appending!!");
     return;
   }
+  //If file is found this output is outputted
   if(myFile.print(message)) {
     Serial.println("Values appended Successfully");
   } else {
@@ -71,13 +66,13 @@ void getTimeStamp() {
   //Serial.println(formatDate);
 
   int splitT = formatDate.indexOf("T");
-  dayStamp = formatDate.substring(0, splitT);
+  dayStamp = formatDate.substring(0, splitT); //Day stamp
   //Serial.println(dayStamp);
-  timeStamp = formatDate.substring(splitT+1,formatDate.length()-1);
+  timeStamp = formatDate.substring(splitT+1,formatDate.length()-1); // time Stamp
   //Serial.println(timeStamp);
 }
 
-//Same as append same as before but checks if can write to
+//Same as append same as before but checks if can write to the file
 void writeToFile(fs::FS &fs, const char *path, const char*message) {
   Serial.printf("Writing File: %s\n", path);
 
@@ -100,13 +95,12 @@ void logSDCard () {
   dataMessage = "The reading is: " + String (readingID) + " The time the reading took place: " + String(dayStamp) +  " The temperature value is: " 
    + String(temperature) +  " The humidity Value is: " + String(humidity) + "\r\n";
 
- //Serial.println(dataMessage);
+  //Serial.println(dataMessage);
   appendFile(SD, "/data.txt" , dataMessage.c_str());
 }
 
-//Calls the other methods and connects to internet 
+//Method used to initalize SD card and open the .txt file for storage 
 void SDcardsetup() {
-  
   SD.begin(SDPin);
   if(!SD.begin(SDPin)) {
     Serial.println("Card mount failed");
@@ -127,23 +121,17 @@ void SDcardsetup() {
   if(!myFile) {
     Serial.println("File doesn't exist");
     Serial.println("Creating File.....");
-    writeToFile(SD, "/data.txt", "Reading ID, Date, Hour, Temperature \r\n");
+    writeToFile(SD, "/data.txt", "New reading started\r\n");
   } else {
     Serial.println("File Already Exists");
   }
   myFile.close();
 
-  //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
-
   getReadings();
-  //getTimeStamp();
   logSDCard();
 
-  readingID++;
+  readingID++;//increments reading number 
   Serversetup();
-
-  //Serial.println("Sleeping....");
-  //esp_deep_sleep_start();
 }
 
 //Passing all set up methods to the main class

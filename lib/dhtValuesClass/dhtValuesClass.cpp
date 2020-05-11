@@ -32,6 +32,6 @@ float humValueReturnFromDHTClass(){
 	
 	humidtyValue = dht.readHumidity();
     return humidtyValue;
-// 	Serial.print("Humidity value is ");
-// 	Serial.println(humidtyValue);
+	//Serial.print("Humidity value is ");
+	//Serial.println(humidtyValue);
  }

@@ -1,24 +1,24 @@
 #include <Arduino.h>
 #include <alarm.cpp>
 
+//DHT setup class
 void dhtClassSetupCalling(){
   dhtClassSetupCallingOG();
 }
-
+//Alarm/Buzzer setup
 void alarmClassSetupCalling(){
 	alarmSetup();
 }
+//Buzzer checl called in a loop while PIR sensor is on 
 void alarmCalled(){
 	tempValueCheck();
 	humValueCheck();
 	whichAlarm();
 }
 
+//Used to determin which RGB to light up in the switch case
 int switchCaseTemp;
 int switchCaseHum;
-
-//Global 
-//int switchCaseTemp;
 
 //Temp RGB
 const int redTemp = 4;
@@ -26,7 +26,7 @@ const int greenTemp = 16;
 const int blueTemp = 17;
 
  void tempratureSetupClass(){
-	//Temprature RGB's
+	//Temprature RGB's setup
 	pinMode(redTemp, OUTPUT);
 	pinMode(blueTemp, OUTPUT);
 	pinMode(greenTemp, OUTPUT);
@@ -34,11 +34,13 @@ const int blueTemp = 17;
 	
 }
 
+//Method checks which range the temprature value falls into
 int tempReturn(){
 	
     float t = tempPass(); //Reads temprature stores value in "t"
     
-    if (isnan(t)) {
+    //Error handleing if the DHT is not connected the user is notified 
+	if (isnan(t)) {
 		Serial.println("Failed to read Temprature from DHT sensor!");
 		Serial.println("Ensure DHT is connected correctly");
 		delay(1000);
@@ -65,6 +67,7 @@ int tempReturn(){
   
 }
 
+//Defines which colour to set the temprature RGB
 int RGBTempClass(){
     switch (switchCaseTemp) {
 	case 1: //If switchCaseTemp is set to 1 useing the if statment above 
@@ -90,7 +93,6 @@ int RGBTempClass(){
 
 		//The default is set if my previous code crashes it will become obvious as the RGB will go CYAN
 	default:
-		//Serial.println(" Temprature Loop if statements haven't run correctly");
 		digitalWrite(greenTemp, HIGH);
 		digitalWrite(blueTemp, HIGH);
 		digitalWrite(redTemp, LOW);

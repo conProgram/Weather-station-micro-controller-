@@ -103,9 +103,9 @@ void fiveSecAlarm(){
 }
 }
 
-
+//Checks temp value
 int tempValueCheck(){
-mainOledMethod();
+mainOledMethod(); //As this method is called in a continues loop the oled main looping method is called here for convience 
 
 temp = tempValueReturnDHT(); //Reads temprature stores value in "t"
 
@@ -150,6 +150,25 @@ hum = humValueReturnDHT();
 	return HumColorTypeReturn;
 }
 
+//Method to cheeck is snooze button has been pressed
+void alarmButton(){
+	//Alarm button read in
+	alarm_button_state = digitalRead(snoozeButton);
+	
+	//If alarm/snooze button is pressed do this
+	while(alarm_button_state == LOW){
+		Serial.println("Alarm Snoozed for 2 mins");
+		digitalWrite(pinBuz, 0);
+		delay(500);//debounce here so dosen't delay output to user
+		
+		snoozedState = 1;
+		twoMinSnooze();
+		break;
+
+}}
+
+
+
 void whichAlarm(){
     
 switch(TempColorTypeReturn){
@@ -189,21 +208,7 @@ switch(HumColorTypeReturn){
 	}
 }
 
-void alarmButton(){
-	//Alarm button read in
-	alarm_button_state = digitalRead(snoozeButton);
-	
-	//If alarm/snooze button is pressed do this
-	while(alarm_button_state == LOW){
-		Serial.println("Alarm Snoozed for 2 mins");
-		digitalWrite(pinBuz, 0);
-		delay(500);//debounce here so dosen't delay output to user
-		
-		snoozedState = 1;
-		twoMinSnooze();
-		break;
 
-}}
 
 
 

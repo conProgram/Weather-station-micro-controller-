@@ -27,6 +27,8 @@ String datatype;
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
+
+//Sets up the OLED
 void screenSetup(){
 
 if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
@@ -34,13 +36,14 @@ if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
     for(;;);
   }
 
+//Sets up advanced feature button change
 pinMode(displayButtonPin, INPUT);
 	Serial.println("displayButton set up");  
 }
 
 
 
-
+//Returns the temprature and humdity values in these two methods
 int tempValueReturnDHT(){
   tempValue = tempValueReturnFromDHTClass();
   return tempValue;
@@ -52,7 +55,7 @@ int humValueReturnDHT(){
 }
 
 
-
+//Used to check if the display button has been pressed
 void displayButton(){
   led_change_button_state = digitalRead(displayButtonPin);
 
@@ -96,7 +99,7 @@ String whichDisplayType(){
   
 }
 
-
+//This method sets exactly what is on the screen this is done in realtime as defined in the spec
 void screenOutput(){
   display.clearDisplay();
 
@@ -110,6 +113,7 @@ void screenOutput(){
   display.display();
 }
 
+//This calls all the methods from this class to be used in the loop 
 void mainOledMethod(){
   displayButton();
   whichDisplayValue();

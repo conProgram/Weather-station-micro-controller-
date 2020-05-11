@@ -65,9 +65,7 @@ int outputButton() {
 	}
 
 //Output time is then returned to be used in the PIR class
-return outputTime;
-    
-  
+return outputTime;  
 }
 
 //This method is just for the button itself
@@ -83,7 +81,7 @@ void outputButtonRead(){
 		endPressed = millis();
 		holdTime = endPressed - startPressed;
 
-
+		//This if statement ensures the button is held down for a complete second before it does anything 
 		if(holdTime > 999){
 		outputButtonPresses++;
 		int upToDateOutputTime = outputButton();

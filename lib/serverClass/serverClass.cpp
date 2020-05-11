@@ -5,21 +5,9 @@
 #include <WiFiUdp.h>
 #include <pirSensorClass.cpp>
 
-//This passes all the setup methods from the PirClass into here to then be passes the main setup()
- void bigSetUpMethod(){
- setupPirClass();
- }
-//This passes all the Loop methods from the PirClass into here to then be passes the main loop()
- void bigLoopMethod(){
- loopingPirSensor();
- }
 
-//All sever code here
 
 //Hotspot credentials are set
-
-
-//Need to change from hotpot to external server 
 const char*ssid = "CiPhone"; //My hotspot name
 const char*password = "conyers98"; //Hotspot password
 
@@ -49,7 +37,7 @@ int readDHTHumidity() {
 }
 
 
-//Converts int values to strings so can be used on the web server 
+//Converts int temprature to strings so can be used on the web server 
 String stringConvertTemp(){
 //if statment used to update values every 30 seconds  
 int currentTimeSever = millis();
@@ -152,11 +140,10 @@ String processor(const String& var){
   return String();
 }
 
-
 //This method sets up the server 
 void Serversetup(){
   
-  // Connect to Wi-Fi
+  // Connects to Wi-Fi
   WiFi.begin(ssid, password);
   
   while (WiFi.status() != WL_CONNECTED) {
@@ -165,6 +152,7 @@ void Serversetup(){
     break;
   }
   
+  //Outputs IP address for user to see
   Serial.print("Enter this code into your broswer to view WEB server: ");
   //Gets the web address to view the web server on your connected hotspot
   Serial.println(WiFi.localIP());
@@ -184,3 +172,11 @@ void Serversetup(){
 }
 
 
+//This passes all the setup methods from the PirClass into here to then be passes the main setup()
+ void bigSetUpMethod(){
+ setupPirClass();
+ }
+//This passes all the Loop methods from the PirClass into here to then be passes the main loop()
+ void bigLoopMethod(){
+ loopingPirSensor();
+ }
